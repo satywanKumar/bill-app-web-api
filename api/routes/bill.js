@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Bill = require('../model/bill');
 const mongoose = require('mongoose');
-const isAuth = require('../middleware/isAuth');
 
 
 // const MIME_TYPE_MAP = {
@@ -32,7 +31,7 @@ const isAuth = require('../middleware/isAuth');
 
 
 // get request 
-router.get('/',isAuth,(req,res,next)=>{
+router.get('/',(req,res,next)=>{
    Bill.find()
    .then(result=>{
        res.status(200).json({
@@ -47,7 +46,7 @@ router.get('/',isAuth,(req,res,next)=>{
 })
 
 // get by id
-router.get('/:billId',isAuth,(req,res,next)=>{
+router.get('/:billId',(req,res,next)=>{
     Bill.findById(req.params.billId)
     .then(result=>{
         res.status(200).json({
@@ -62,7 +61,7 @@ router.get('/:billId',isAuth,(req,res,next)=>{
 })
 
 // post request
-router.post('/',isAuth,(req,res,next)=>{
+router.post('/',(req,res,next)=>{
    bill = new Bill({
 
        _id:new mongoose.Types.ObjectId,
@@ -174,7 +173,7 @@ router.post('/',isAuth,(req,res,next)=>{
 // })
 
 // delete request
-router.delete('/:billId',isAuth,(req,res,next)=>{
+router.delete('/:billId',(req,res,next)=>{
    Bill.remove({_id:req.params.billId})
    .then(result=>{
        res.status(200).json({
@@ -189,7 +188,7 @@ router.delete('/:billId',isAuth,(req,res,next)=>{
    })
 })
 
-router.get('/get/count',isAuth,(req,res,next)=>{
+router.get('/get/count',(req,res,next)=>{
     Bill.find().countDocuments()
     .then(result=>{
         res.status(200).json({

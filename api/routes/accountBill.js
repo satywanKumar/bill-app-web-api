@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 const SsAccount = require('../model/accountBill');
 const mongoose = require('mongoose');
-const isAuth = require('../middleware/isAuth')
 
-router.post('/',isAuth,(req,res,next)=>{
+router.post('/',(req,res,next)=>{
    account = new SsAccount({
     _id:new mongoose.Types.ObjectId,
     partyName:req.body.partyName,
@@ -28,7 +27,7 @@ router.post('/',isAuth,(req,res,next)=>{
 });
 
 // get all student account detail
-router.get('/',isAuth,(req,res,next)=>{
+router.get('/',(req,res,next)=>{
     SsAccount.find()
     .then(result=>{
         res.status(200).json({
@@ -43,7 +42,7 @@ router.get('/',isAuth,(req,res,next)=>{
 });
 
 // get by id 
-router.get('/:id',isAuth,(req,res,next)=>{
+router.get('/:id',(req,res,next)=>{
     SsAccount.findOne({_id:req.params.id})
     .then(result=>{
         res.status(200).json({
@@ -58,7 +57,7 @@ router.get('/:id',isAuth,(req,res,next)=>{
 })
 
 // edit detail
-router.put('/:id',isAuth,(req,res,next)=>{
+router.put('/:id',(req,res,next)=>{
     SsAccount.findOneAndUpdate({_id:req.params.id},{
         $set:{
             partyName:req.body.partyName,
@@ -84,7 +83,7 @@ router.put('/:id',isAuth,(req,res,next)=>{
 
 
 // pay by id 
-router.put('/pay/:id',isAuth,(req,res,next)=>{
+router.put('/pay/:id',(req,res,next)=>{
     SsAccount.findOneAndUpdate({_id:req.params.id},{
         $set:{
             paid:req.body.paid,
@@ -106,7 +105,7 @@ router.put('/pay/:id',isAuth,(req,res,next)=>{
 })
 
 // delete request
-router.delete('/:id',isAuth,(req,res,next)=>{
+router.delete('/:id',(req,res,next)=>{
     SsAccount.remove({_id:req.params.id})
     .then(result=>{
         res.status(200).json({
